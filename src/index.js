@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import App, { theme } from "./App";
 import { makeServer } from "./server";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
@@ -13,7 +13,7 @@ makeServer();
 ReactDOM.render(
   	<React.StrictMode>
 		<BrowserRouter>
-			<ChakraProvider> 
+			<ChakraProvider theme={theme}> 
 				<Provider store={store}>   
 					<App />
 				</Provider>
