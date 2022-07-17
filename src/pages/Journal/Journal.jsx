@@ -33,7 +33,9 @@ const Journal = () => {
         
     }
     const deleteNote = (id) => {  dispatch(deleteaHabit(id)); };
-    const archiveNote = (id) => {  dispatch(addToArchive({habitId:id,toast})); };
+    const archiveNote = (id) => {  
+        //dispatch(addToArchive({habitId:id,toast})); 
+    };
     const { habits, habitDetail, isOneHabitFetching } = useSelector( habitSelector );
     const { labels } = useSelector( labelSelector );
 
