@@ -5,7 +5,6 @@ import { deleteaHabit, getAllHabits, getOneHabit, habitSelector } from "../../re
 import { AddIcon, ArchiveActionIcon, DeleteActionIcon, PenActionIcon, PinIcon } from "../../assests";
 import AddHabit from "../../components/AddHabit";
 import { useEffect, useState } from "react";
-import { addToArchive } from "../../redux/archive";
 import { getLabels, labelSelector } from "../../redux/label";
  
 const Journal = () => {
