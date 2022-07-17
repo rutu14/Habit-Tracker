@@ -78,7 +78,7 @@ export const editaHabit = createAsyncThunk(
 
 export const deleteaHabit = createAsyncThunk(
     "users/deleteaHabit",
-    async (habitid,thunkAPI) => {
+    async ({habitid,toast},thunkAPI) => {
     	try {
 			const { data } = await axios.delete( `/api/habits/${habitid}`, config);
 			toast({

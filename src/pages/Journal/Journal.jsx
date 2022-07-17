@@ -31,11 +31,11 @@ const Journal = () => {
         }
         
     }
-    const deleteNote = (id) => {  dispatch(deleteaHabit(id)); };
+    const deleteNote = (id) => {  dispatch(deleteaHabit({habitid:id,toast})); };
     const archiveNote = (id) => {  
         //dispatch(addToArchive({habitId:id,toast})); 
     };
-    const { habits, habitDetail, isOneHabitFetching } = useSelector( habitSelector );
+    const { habits, habitDetail, isOneHabitFetching, isFetching } = useSelector( habitSelector );
     const { labels } = useSelector( labelSelector );
 
     const displayLabel = (labelName) => {
