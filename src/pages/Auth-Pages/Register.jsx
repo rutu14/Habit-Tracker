@@ -76,6 +76,7 @@ const Register = () => {
 		<Box py={{ base: '0', sm: '8' }} px={{ base: '6', sm: '10' }} bg={'whiteAlpha.800'} boxShadow={{ base: 'none', sm: 'md' }} borderRadius={{ base: 'none', sm: 'xl' }}>
 			<Stack spacing="6">
 				<Stack spacing="5">
+                <HStack>
                     <FormControl isRequired>
 						<FormLabel htmlFor="firstname">First Name</FormLabel>
 						<Input id="firstname" type="text" value={signupInputs.firstname} name='firstname' onChange={handleChange}/>
@@ -84,6 +85,7 @@ const Register = () => {
 						<FormLabel htmlFor="lastname">Last Name</FormLabel>
 						<Input id="lastname" type="text" value={signupInputs.lastname} name='lastname' onChange={handleChange}/>
 					</FormControl>
+                </HStack>
 					<FormControl isRequired>
 						<FormLabel htmlFor="email">Email</FormLabel>
 						<Input id="email" type="email" value={signupInputs.email} name='email' onChange={handleChange}/>

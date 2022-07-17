@@ -3,10 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App, { theme } from "./App";
 import { makeServer } from "./server";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider} from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import store from "./store";
 import { BrowserRouter } from "react-router-dom";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
 
 makeServer();
 
@@ -14,7 +16,7 @@ ReactDOM.render(
   	<React.StrictMode>
 		<BrowserRouter>
 			<ChakraProvider theme={theme}> 
-				<Provider store={store}>   
+				<Provider store={store}> 
 					<App />
 				</Provider>
 			</ChakraProvider>

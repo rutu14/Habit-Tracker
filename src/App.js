@@ -1,9 +1,10 @@
-import { Button, extendTheme } from "@chakra-ui/react";
+import { Box, Button, extendTheme } from "@chakra-ui/react";
 import { Navigate, Outlet, Route, Routes } from "react-router";
-import { Dashboard, Home, Login, Register } from "./pages";
+import { Archive, Dashboard, EditHabit, Home, Journal, Label, Login, Register } from "./pages";
 import { userSelector } from "./redux/auth";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Navbar from "./components/Navbar";
 
 export const theme = extendTheme({
     colors: {
@@ -19,8 +20,16 @@ const PrivateRoute = () => {
     const { user } = useSelector( userSelector );
     const tokenPresent = user ? true : false;
 
+    const PageLayout = () => {
+        return(
+            <Box maxW={'full'} minH={'100vh'} py={{ base: '12', md: '7' }} px={{ base: '0', sm: '8' }} fontFamily={'lato'} backgroundColor={'#e5e5f7'} opacity={'0.8'} backgroundImage={'radial-gradient(#444cf7 0.5px, transparent 0.5px), radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px)'} backgroundSize={'20px 20px'} backgroundPosition={ '0 0,10px 10px' } zIndex={'-1'}>
+                <Navbar/>
+                <Outlet/>
+            </Box>); 
+    }
+
     return tokenPresent 
-            ?  <Outlet/> 
+            ?  <PageLayout/>
             :   <Navigate to="/login" />;
 }
 
@@ -45,6 +54,10 @@ function App () {
             </Route>
             <Route element={<PrivateRoute/>}>
 			    <Route path='dashboard' element={<Dashboard/>}/>
+                <Route path='journal' element={<Journal/>}/>
+                <Route path='edit' element={<EditHabit/>}/>
+                <Route path='label' element={<Label/>}/>
+                <Route path='archive' element={<Archive/>}/>
             </Route>
         </Routes>
       );
