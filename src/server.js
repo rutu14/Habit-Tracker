@@ -65,15 +65,12 @@ export function makeServer({ environment = "development" } = {}) {
 
       // label routes (private)
       this.get("labels", getLabelsHandler.bind(this));
-      this.post("labels/:labelName", createLabelHandler.bind(this));
-      this.delete("labels/:labelName", deleteLabelHandler.bind(this));
+      this.post("labels/addlabel", createLabelHandler.bind(this));
+      this.delete("labels/:labelId", deleteLabelHandler.bind(this));
 
       // archive routes (private)
       this.get("archives", getAllArchivedHabitsHandler.bind(this));
-      this.post(
-        "archives/restore/:habitId",
-        restoreFromArchivesHandler.bind(this)
-      );
+      this.post("archives/restore/:habitId",restoreFromArchivesHandler.bind(this));
       this.post("archives/:habitId", archiveHabitHandler.bind(this));
       this.delete("archives/:habitId", deleteFromArchivesHandler.bind(this));
     },

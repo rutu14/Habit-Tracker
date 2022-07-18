@@ -1,5 +1,6 @@
 import { Response } from "miragejs";
 import { requiresAuth } from "../utils/authUtils";
+import { v4 as uuid } from "uuid";
 
 /**
  * All the routes related to Habit Label are present here.
@@ -41,15 +42,20 @@ export const createLabelHandler = function (schema, request) {
       }
     );
   }
-  const { labelName } = request.params;
-  if (user.labels.includes(labelName)) {
+  const { label } = JSON.parse(request.requestBody);
+  const indexFound = user.labels.findIndex((labelPresent) => labelPresent.labelName === label.labelName );
+  if (indexFound !== -1 ) {
     return new Response(
       409,
       {},
       { errors: ["Duplicate data found. Label name must be unique."] }
     );
   }
-  user.labels.push(labelName);
+  const createdLabel = {
+    _id: uuid(),
+    ...label,
+  };
+  user.labels.push(createdLabel);
   this.db.users.update({ _id: user._id }, user);
   return new Response(200, {}, { labels: user.labels });
 };
@@ -70,8 +76,8 @@ export const deleteLabelHandler = function (schema, request) {
       }
     );
   }
-  const { labelName } = request.params;
-  user.labels = user.labels.filter((label) => label !== labelName);
+  const labelId = request.params.labelId;
+  user.labels = user.labels.filter((label) => label._id !== labelId);
   this.db.users.update({ _id: user._id }, user);
   return new Response(200, {}, { labels: user.labels });
 };
