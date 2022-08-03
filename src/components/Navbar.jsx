@@ -1,13 +1,23 @@
-import { Avatar, Box, Center, Flex, Heading, IconButton, Menu, MenuButton, MenuItem, MenuList, Tooltip } from "@chakra-ui/react"
+import {Avatar, Box, Center, Flex, Heading, IconButton, Menu, MenuButton, MenuDivider, MenuItem, MenuList, Tooltip } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
-import { logOut } from "../redux/auth";
-import { ArchiveIcon, HabitIcon, HomeIcon, TagIcon } from "../assests";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
+import { logOut } from "../redux";
+import { ArchiveIcon, HabitIcon, HomeIcon, TagIcon } from "../assests";
+import { greetingWord } from "../utils";
 
 const Navbar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [greet, setGreet] = useState();  
+    const avatarName = localStorage.getItem('avatarName');
+    const userName = localStorage.getItem('userName');
+
+    useEffect(()=>{
+       setGreet(greetingWord);
+    },[])
+
     const logOutOption = () => {
         dispatch(logOut());
         navigate("/");
@@ -28,7 +38,7 @@ const Navbar = () => {
                     <IconButton fontSize={'4xl'} variant={'link'} colorScheme={'purple'} icon={<TagIcon/>}></IconButton>
                 </Link>    
             </Tooltip>
-            <Tooltip label='Habits' fontSize='sm'>
+            <Tooltip label='Journal' fontSize='sm'>
                 <Link to={'journal'}>
                     <IconButton fontSize={'4xl'} variant={'link'} colorScheme={'purple'} icon={<HabitIcon/>}></IconButton>
                 </Link>    
@@ -39,12 +49,17 @@ const Navbar = () => {
                 </Link>    
             </Tooltip>
             </Flex>
-            <Heading minW={'60%'} textAlign={'center'} fontFamily={'monospace'} fontSize={'2xl'}>Hola Rutuja</Heading>
+            <Heading minW={'60%'} textAlign={'center'} fontFamily={'monospace'} fontSize={'2xl'} fontWeight={'normal'}>{greet} {userName}</Heading>
                 <Menu>
                     <MenuButton marginLeft={'auto'} >
-                    <Avatar colorScheme={'purple'} name='X L' />
+                    <Avatar colorScheme={'purple'} name={avatarName} />
                     </MenuButton>
                     <MenuList>
+                        <Link to={'dashboard'}><MenuItem fontSize={'md'}>Dashboard</MenuItem></Link>
+                        <Link to={'label'}><MenuItem fontSize={'md'}>Labels</MenuItem></Link>
+                        <Link to={'journal'}><MenuItem fontSize={'md'}>Journal</MenuItem></Link>
+                        <Link to={'archive'}><MenuItem fontSize={'md'}>Archives</MenuItem></Link>
+                        <MenuDivider/>
                         <MenuItem fontSize={'md'} onClick={logOutOption}>Log Out</MenuItem>
                     </MenuList>
                     </Menu>

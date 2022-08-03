@@ -64,11 +64,9 @@ export const restoreFromArchivesHandler = function (schema, request) {
     );
   }
   const { habitId } = request.params;
-  const restoredHabit = user.archives.filter(
-    (habit) => habit._id === habitId
-  )[0];
+  const restoredHabit = user.archives.filter((habit) => habit._id === habitId)[0];
   user.archives = user.archives.filter((habit) => habit._id !== habitId);
-  user.habits.push(restoredHabit);
+  user.habits.push({ ...restoredHabit});
   this.db.users.update({ _id: user._id }, user);
   return new Response(
     200,
@@ -95,9 +93,7 @@ export const archiveHabitHandler = function (schema, request) {
       );
     }
     const { habitId } = request.params;
-    const archivedHabit = user.habits.filter(
-      (habit) => habit._id === habitId
-    )[0];
+    const archivedHabit = user.habits.filter((habit) => habit._id === habitId)[0];
     user.habits = user.habits.filter((habit) => habit._id !== habitId);
     user.archives.push({ ...archivedHabit });
     this.db.users.update({ _id: user._id }, user);

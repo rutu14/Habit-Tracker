@@ -1,9 +1,9 @@
-import { Box, Button, Container, Divider, FormControl, FormLabel, Heading, HStack, Input, Stack, Text, useToast} from "@chakra-ui/react"
+import { Box, Button, Container, Divider, FormControl, FormLabel, Heading, HStack, Input, Stack, Text, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import { signupUser, userSelector } from "../../redux/auth";
+import { signupUser, userSelector } from "../../redux";
 import { emailRegex, passwordRegex } from "../../utils";
 
 const Register = () => {
@@ -11,11 +11,11 @@ const Register = () => {
 	const dispatch = useDispatch();
     const navigate = useNavigate();
 
-	const [ signupInputs, setSignupInputs ] = useState({firstname: "" ,lastname: "",email:"",password:""})
-  	const { isFetching, isSuccess, isError, errorMessage } = useSelector( userSelector );
+	const [ signupInputs, setSignupInputs ] = useState({firstName: "" ,lastName: "",email:"",password:""})
+  	const {  isRegisterFetching,isRegisterSuccess } = useSelector( userSelector );
 
     const onSubmit = () => {
-        if( signupInputs.firstname === "" || signupInputs.lastname === "" || signupInputs.email === "" || signupInputs.password === "" ){
+        if( signupInputs.firstName === "" || signupInputs.lastName  === "" || signupInputs.email === "" || signupInputs.password === "" ){
             toast({
                 title: 'Please fill empty the input values',
                 status: 'warning',
@@ -37,7 +37,8 @@ const Register = () => {
                 isClosable: true,
             });
         }else{
-			dispatch(signupUser(signupInputs));
+            const signUpParameters = { signupInputs, toast };
+			dispatch(signupUser(signUpParameters));
         }
 	}
     const handleChange = e => {
@@ -49,18 +50,10 @@ const Register = () => {
     };
 
     useEffect(() => {
-        if (isError) {
-            toast({
-                title: errorMessage,
-                status: 'error',
-                variant:'left-accent',
-                isClosable: true,
-            })
-        }
-        if (isSuccess) {
+        if (isRegisterSuccess) {
             setTimeout(() => {navigate('/dashboard')}, 0);
         }
-    }, [isError, isSuccess]);
+    }, [isRegisterSuccess]);
 
     return (
 	<Box backgroundColor={'#e5e5f7'} opacity={'0.8'} backgroundImage={'radial-gradient(#444cf7 0.5px, transparent 0.5px), radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px)'} backgroundSize={'20px 20px'} backgroundPosition={ '0 0,10px 10px' }>
@@ -78,25 +71,25 @@ const Register = () => {
 				<Stack spacing="5">
                 <HStack>
                     <FormControl isRequired>
-						<FormLabel htmlFor="firstname">First Name</FormLabel>
-						<Input id="firstname" type="text" value={signupInputs.firstname} name='firstname' onChange={handleChange}/>
+						<FormLabel htmlFor="firstName">First Name</FormLabel>
+						<Input id="firstName" borderColor={'blackAlpha.600'} type="text" value={signupInputs.firstName} name='firstName' onChange={handleChange}/>
 					</FormControl>
                     <FormControl isRequired>
-						<FormLabel htmlFor="lastname">Last Name</FormLabel>
-						<Input id="lastname" type="text" value={signupInputs.lastname} name='lastname' onChange={handleChange}/>
+						<FormLabel htmlFor="lastName">Last Name</FormLabel>
+						<Input id="lastName" borderColor={'blackAlpha.600'} type="text" value={signupInputs.lastName } name='lastName' onChange={handleChange}/>
 					</FormControl>
                 </HStack>
 					<FormControl isRequired>
 						<FormLabel htmlFor="email">Email</FormLabel>
-						<Input id="email" type="email" value={signupInputs.email} name='email' onChange={handleChange}/>
+						<Input id="email" borderColor={'blackAlpha.600'} type="email" value={signupInputs.email} name='email' onChange={handleChange}/>
 					</FormControl>
 					<FormControl isRequired>
 						<FormLabel htmlFor="password">Password</FormLabel>
-						<Input id="password" type="password" value={signupInputs.password} name='password' onChange={handleChange}/>
+						<Input id="password" borderColor={'blackAlpha.600'} type="password" value={signupInputs.password} name='password' onChange={handleChange}/>
 					</FormControl>
 				</Stack>
 				<Stack spacing="6">
-					<Button variant={"solid"} color={'whiteAlpha.900'} bg={'primary.400'} fontWeight={'normal'} fontSize={'xl'} _hover={{ bg: 'primary.300',color:'whiteAlpha.900'}} onClick={onSubmit} disabled={isFetching}>
+					<Button variant={"solid"} color={'whiteAlpha.900'} bg={'primary.400'} fontWeight={'normal'} fontSize={'xl'} _hover={{ bg: 'primary.300',color:'whiteAlpha.900'}} onClick={onSubmit} disabled={isRegisterFetching}>
 						Sign up
 					</Button>
 					<Divider borderBottomWidth={2} borderBottomColor={'purple.300'} />

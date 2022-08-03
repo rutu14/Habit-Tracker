@@ -1,10 +1,10 @@
 import { Box, Button, extendTheme } from "@chakra-ui/react";
 import { Navigate, Outlet, Route, Routes } from "react-router";
 import { Archive, Dashboard, EditHabit, Home, Journal, Label, Login, Register } from "./pages";
-import { userSelector } from "./redux/auth";
+import { userSelector } from "./redux";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import { Navbar }from "./components";
 
 export const theme = extendTheme({
     colors: {
@@ -13,6 +13,39 @@ export const theme = extendTheme({
         300:'#8682FF',
         400:'#6C63FF'
       },
+    },
+    components: {
+        Alert: {
+            variants: {
+                habitCreated: {
+                    container: {
+                        color: "#F5E8E4",
+                        bg: "#411530",
+                        borderBottom: '2px Solid',
+                        borderColor: '#fff',
+                        bottom: '80px'
+                    }
+                },
+                habitEdited: {
+                    container: {
+                        color: "#F7CCAC",
+                        bg: "#3A3845",
+                        borderBottom: '3px Solid',
+                        borderColor: '#fff',
+                        bottom: '80px'
+                    }
+                },
+                habitDeleted: {
+                    container: {
+                        color: "#FCF0C8",
+                        bg: "#911F27",
+                        borderBottom: '3px Solid',
+                        borderColor: '#fff',
+                        bottom: '80px'
+                    }
+                }
+            }
+        }
     },
 })
 

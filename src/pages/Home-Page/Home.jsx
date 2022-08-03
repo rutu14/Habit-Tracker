@@ -1,4 +1,4 @@
-import {Container,Stack,Flex,Heading,Text,Button} from '@chakra-ui/react';
+import { Container, Stack, Flex, Heading, Text, Button } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { HomePageImage, PlayIcon } from '../../assests';
   

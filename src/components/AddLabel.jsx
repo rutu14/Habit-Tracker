@@ -1,7 +1,7 @@
-import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Stack, useToast } from "@chakra-ui/react"
+import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Stack, useToast} from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createaLabel } from "../redux/label";
+import { createaLabel } from "../redux";
 import { capitializeString, colorOption } from "../utils";
 
 const AddLabel = ({isOpen,onClose}) => {
@@ -17,10 +17,9 @@ const AddLabel = ({isOpen,onClose}) => {
                 status: 'warning',
                 variant:'left-accent',
                 isClosable: true,
-            })
+            });
         }else{
             const createParameter = {label:labelInputs,toast};
-            console.log(createParameter)
 			dispatch(createaLabel(createParameter));
             setLabelInputs(initialState);
             onClose();
@@ -37,17 +36,17 @@ const AddLabel = ({isOpen,onClose}) => {
     return(
         <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay py={'5'}  />
-        <ModalContent maxW={'2xl'} bg={'#e5e5f7'}>
-          <ModalHeader fontSize={'2xl'} color={'red.300'} textAlign={'center'}>Add Label</ModalHeader>
+        <ModalContent maxW={'2xl'} bg={'#cdcaf6'}>
+          <ModalHeader fontSize={'2xl'} color={'purple.800'} textAlign={'center'}>Add Label</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
           <Stack spacing="8">
           <Stack spacing="5">
 					<FormControl isRequired>
 						<FormLabel htmlFor="title">Title</FormLabel>
-						<Input value={labelInputs.labelName} onChange={handleChange} name='labelName' borderColor={'blackAlpha.600'} bg={'whiteAlpha.300'} id="title" type="text" />
+						<Input value={labelInputs.labelName} onChange={handleChange} name='labelName' borderColor={'blackAlpha.600'} bg={'blackAlpha.50'} _focus={{bg:'#e6e9f4db'}} id="title" type="text" />
 					</FormControl>
-                    <Select value={labelInputs.color} onChange={handleChange} name='color' borderColor={'blackAlpha.600'} bg={labelInputs.color !== 'default' ?`${labelInputs.color}.100`:'whiteAlpha.300'} variant='outline' placeholder='Select a Color'>
+                    <Select value={labelInputs.color} onChange={handleChange} name='color' borderColor={'blackAlpha.600'} bg={labelInputs.color !== 'default' ?`${labelInputs.color}.100`:'blackAlpha.50'} _focus={{bg:'#e6e9f4db'}}variant='outline' placeholder='Select a Color'>
                             {colorOption.map((color) => {
                                 return(<option key={color} value={color}>{capitializeString(color)}</option>);
                             })}

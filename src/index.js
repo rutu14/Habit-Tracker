@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "./index.css";
 import App, { theme } from "./App";
 import { makeServer } from "./server";
@@ -9,10 +9,12 @@ import store from "./store";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
+const rootElement = document.getElementById("root");
+const root = createRoot(rootElement);
 
 makeServer();
 
-ReactDOM.render(
+root.render(
   	<React.StrictMode>
 		<BrowserRouter>
 			<ChakraProvider theme={theme}> 
@@ -21,6 +23,5 @@ ReactDOM.render(
 				</Provider>
 			</ChakraProvider>
 		</BrowserRouter>
-  	</React.StrictMode>,
-  	document.getElementById("root")
+  	</React.StrictMode>
 );

@@ -1,17 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const token = localStorage.getItem("token");
-const config = { headers: { 'authorization': token } };
+import { config, errorMessage } from "../utils";
 
 export const getLabels = createAsyncThunk(
     "users/getLabels",
-    async (thunkAPI) => {
+    async (toast,thunkAPI) => {
         try {
             const { data } = await axios.get('/api/labels', config);
             return data.labels;
         } catch (e) {
-            return thunkAPI.rejectWithValue(e.response.data.errors[0]);
+            const errorTitle =  e.response.data.errors[0] ? e.response.data.errors[0] : errorMessage;
+            toast({
+                title: errorTitle,
+                status: 'error',
+                variant:'left-accent',
+                isClosable: true,
+            });
+            return thunkAPI.rejectWithValue(errorTitle);
         }
     }
 )
@@ -22,20 +27,22 @@ export const getLabels = createAsyncThunk(
         try {
             const { data } = await axios.post('/api/labels/addlabel', {label}, config);
             toast({
-                title: 'Added an label 🖍',
+                title: 'Added an label',
                 status: 'success',
-                variant:'left-accent',
+                variant:'habitCreated',
                 isClosable: true,
+                icon: '🖍'
             });
             return data.labels;
         } catch (e) {
+            const errorTitle =  e.response.data.errors[0] ? e.response.data.errors[0] : errorMessage;
             toast({
-                title: e.response.data.errors[0],
+                title: errorTitle,
                 status: 'error',
                 variant:'left-accent',
                 isClosable: true,
-            }) 
-            return thunkAPI.rejectWithValue(e.response.data.errors[0]);
+            });
+            return thunkAPI.rejectWithValue(errorTitle);
         }
     }
 )
@@ -48,12 +55,20 @@ export const deleteaLabel = createAsyncThunk(
 			toast({
 				title: 'Label Deleted',
 				status: 'success',
-				variant:'left-accent',
+				variant:'habitDeleted',
 				isClosable: true,
-			}) 
+                icon: '🗑'
+			});
 			return data.labels;
 		} catch (e) {
-			thunkAPI.rejectWithValue(e.response.data.errors[0]);
+			const errorTitle =  e.response.data.errors[0] ? e.response.data.errors[0] : errorMessage;
+            toast({
+                title: errorTitle,
+                status: 'error',
+                variant:'left-accent',
+                isClosable: true,
+            });
+            return thunkAPI.rejectWithValue(errorTitle);
 		}
     }
 )
