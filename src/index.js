@@ -9,10 +9,11 @@ import store from "./store";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-const rootElement = document.getElementById("root");
-const root = createRoot(rootElement);
 
 makeServer();
+
+const rootElement = document.getElementById("root");
+const root = createRoot(rootElement);
 
 root.render(
   	<React.StrictMode>
