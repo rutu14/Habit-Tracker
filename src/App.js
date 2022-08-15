@@ -50,8 +50,7 @@ export const theme = extendTheme({
 })
 
 const PrivateRoute = () => {
-    const { user } = useSelector( userSelector );
-    const tokenPresent = user ? true : false;
+    const token = localStorage.getItem("token");
 
     const PageLayout = () => {
         return(
@@ -61,7 +60,7 @@ const PrivateRoute = () => {
             </Box>); 
     }
 
-    return tokenPresent 
+    return token 
             ?  <PageLayout/>
             :   <Navigate to="/login" />;
 }

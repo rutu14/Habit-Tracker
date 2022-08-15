@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { config, errorMessage } from "../utils";
+import { errorMessage } from "../utils";
 
 export const getAllHabits = createAsyncThunk(
     "users/getAllHabits",
     async (toast,thunkAPI) => {
 		try {
+            const token = localStorage.getItem("token");
+            const config = { headers: { 'authorization': token } };
 			const { data } = await axios.get( '/api/habits', config);
 			return data.habits;
 		} catch (e) {
@@ -24,7 +26,9 @@ export const getAllHabits = createAsyncThunk(
 export const createaHabit = createAsyncThunk(
     "users/createaHabit",
     async ({habit,toast},thunkAPI) => {
-		try {
+        try {
+		    const token = localStorage.getItem("token");
+            const config = { headers: { 'authorization': token } };
 			const { data } = await axios.post( '/api/habits', {habit}, config);
 			toast({
 				title: 'Added an habit',
@@ -50,6 +54,8 @@ export const editaHabit = createAsyncThunk(
     "users/editaHabit",
     async ({habitid, habit, toast},thunkAPI) => {
 		try {
+            const token = localStorage.getItem("token");
+            const config = { headers: { 'authorization': token } };
 			const { data } = await axios.post( `/api/habits/${habitid}`, {habit}, config);
 			toast({
 				title: 'Updated the habit',
@@ -76,6 +82,8 @@ export const deleteaHabit = createAsyncThunk(
     "users/deleteaHabit",
     async ({habitId,toast},thunkAPI) => {
     	try {
+            const token = localStorage.getItem("token");
+            const config = { headers: { 'authorization': token } };
 			const { data } = await axios.delete( `/api/habits/${habitId}`, config);
 			toast({
 				title: 'Deleted the habit',
@@ -102,6 +110,8 @@ export const getArchive = createAsyncThunk(
     "users/getArchive",
     async (toast,thunkAPI) => {
         try {
+            const token = localStorage.getItem("token");
+            const config = { headers: { 'authorization': token } };
             const { data } = await axios.get( '/api/archives', config);
             return data.archives;
         } catch (e) {
@@ -121,6 +131,8 @@ export const addToArchive = createAsyncThunk(
     "users/addToArchive",
     async ({habitId,toast},thunkAPI) => {
         try {
+            const token = localStorage.getItem("token");
+            const config = { headers: { 'authorization': token } };
             const { data } = await axios.post( `/api/archives/${habitId}`,{}, config);
             toast({
                 title: 'Added to archive',
@@ -147,6 +159,8 @@ export const restoreArchive = createAsyncThunk(
     "users/restoreArchive",
     async ({habitId, toast},thunkAPI) => {
         try {
+            const token = localStorage.getItem("token");
+            const config = { headers: { 'authorization': token } };
             const { data } = await axios.post( `/api/archives/restore/${habitId}`,{}, config);
             toast({
                 title: 'Restored the archive',
@@ -173,6 +187,8 @@ export const deleteArchive = createAsyncThunk(
     "users/deleteArchive",
     async ({habitId, toast},thunkAPI) => {
         try {
+            const token = localStorage.getItem("token");
+            const config = { headers: { 'authorization': token } };
             const { data } = await axios.delete( `/api/archives/${habitId}`, config);
             toast({
 				title: 'Deleted the archive',
